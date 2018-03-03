@@ -1,4 +1,5 @@
 # OSX-KVM Dockerfile
+[Docker Hub](https://hub.docker.com/r/syuchan1005/osx-kvm/)
 
 ## Usage
 ### Run Container
@@ -8,7 +9,11 @@
 
 1. `docker pull syuchan1005/osx-kvm`
 
-1. `docker run -d --name macOS --device /dev/kvm:/dev/kvm -p 5900:5900 -v /path/to/iso/folder:/data syuchan1005/osx-kvm`
+1. 
+```bash
+docker run -d --name macOS --device /dev/kvm:/dev/kvm -p 5900:5900 \
+-v /path/to/iso/folder:/data syuchan1005/osx-kvm
+```
 
 ### Install macOS
 1. Connect to VNC(port: 5900)
