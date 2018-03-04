@@ -13,19 +13,20 @@ RUN apt-get update && apt-get install -y \
     virt-manager libvirt-bin bridge-utils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone https://github.com/kholia/OSX-KVM.git
+    && git clone https://github.com/kholia/OSX-KVM.git \
+    && git checkout -b test ded4522d17692b7d8d596f8ae3bba8f1bfaae26a
 
 WORKDIR /OSX-KVM
+COPY start.sh /OSX-KVM
 
 # Create Bootable ISO
-RUN git checkout -b test ded4522d17692b7d8d596f8ae3bba8f1bfaae26a \
+RUN chmod 775 start.sh \
     && rm Clover.qcow2 \
     && cd HighSierra \
     && ./clover-image.sh --iso Clover-v2.4k-4380-X64.iso \
         --cfg clover/config.plist.stripped.qemu \
         --img '../Clover.qcow2'
 
-COPY start.sh /OSX-KVM
 EXPOSE 5900
 VOLUME /data
 
