@@ -7,8 +7,18 @@ fi
 
 if [ $CLOVER -ne 0 ]
 then
+  if [ ! -e '/data/Clover.qcow2' ]
+  then
+    cd HighSierra \
+    && ./clover-image.sh \
+        --iso Clover-v2.4k-4380-X64.iso \
+        --cfg clover/config.plist.stripped.qemu \
+        --img '/data/Clover.qcow2' \
+    && cd ../
+  fi
+
   clover=(-device ide-drive,bus=ide.2,drive=Clover \
-          -drive id=Clover,if=none,snapshot=on,format=qcow2,file='./Clover.qcow2')
+          -drive id=Clover,if=none,snapshot=on,format=qcow2,file='/data/Clover.qcow2')
 fi
 
 if [ $INSTALLER -ne 0 ]
@@ -35,3 +45,4 @@ qemu-system-x86_64 -enable-kvm \
   "${clover[@]}" \
   "${installer[@]}" \
   "$@"
+  
