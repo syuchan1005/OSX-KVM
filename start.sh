@@ -1,30 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ ! -e '/data/mac_hdd.img' ]
 then
   qemu-img create -f qcow2 '/data/mac_hdd.img' 128G
 fi
 
+clover1=""
+clover2=""
+installer1=""
+installer2=""
+
 if [ $CLOVER -ne 0 ]
 then
-  if [ ! -e '/data/Clover.qcow2' ]
-  then
-    cd HighSierra \
-    && ./clover-image.sh \
-        --iso Clover-v2.4k-4380-X64.iso \
-        --cfg clover/config.plist.stripped.qemu \
-        --img '/data/Clover.qcow2' \
-    && cd ../
-  fi
-
-  clover=(-device ide-drive,bus=ide.2,drive=Clover \
-          -drive id=Clover,if=none,snapshot=on,format=qcow2,file='/data/Clover.qcow2')
+  clover1="-device ide-drive,bus=ide.2,drive=Clover"
+  clover2="-drive id=Clover,if=none,snapshot=on,format=qcow2,file=/OSX-KVM/Clover.qcow2"
 fi
 
 if [ $INSTALLER -ne 0 ]
 then
-  installer=(-device ide-drive,bus=ide.0,drive=MacDVD \
-              -drive id=MacDVD,if=none,snapshot=on,media=cdrom,file='/data/HighSierra.iso')
+  installer1="-device ide-drive,bus=ide.0,drive=MacDVD"
+  installer2="-drive id=MacDVD,if=none,snapshot=on,media=cdrom,file=/data/HighSierra.iso"
 fi
 
 qemu-system-x86_64 -enable-kvm \
@@ -42,7 +37,8 @@ qemu-system-x86_64 -enable-kvm \
   -vnc 0.0.0.0:0 \
   -smp $(($CORE * 2)),cores=$CORE \
   -m $MEMORY \
-  "${clover[@]}" \
-  "${installer[@]}" \
+  $clover1 \
+  $clover2 \
+  $installer1 \
+  $installer2 \
   "$@"
-  
