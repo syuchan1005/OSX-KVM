@@ -3,24 +3,9 @@
 # OSX-KVM Dockerfile
 [Docker Hub](https://hub.docker.com/r/syuchan1005/osx-kvm/)
 
-## Container Environment
-
-|ENV NAME|default|description|
-|:--|--:|:--|
-|CORE|2|number of cores to use|
-|MEMORY|3G|amount of memory (M = Megabyte, g = Gigabyte)|
-|KEYBOARD|en-us|Keyboard layout|
-|CLOVER|1|Add Clover iso (0: false, *: true)|
-|INSTALLER|1|Add Installer iso (0: false, *: true)|
-
-### Keyboard layouts
-||||||||||||
-|---|---|---|---|---|---|---|---|---|---|---|
-| ar | de-ch | es | fo    | fr-ca | hu | ja | mk    | no | pt-br | sv |
-| da | en-gb | et | fr    | fr-ch | is | lt | nl    | pl | ru    | th |
-| de | en-us | fi | fr-be | hr    | it | lv | nl-be | pt | sl    | tr |
-
 ## Usage
+> EXPOSE 5900(VNC) and 22(SSH)
+
 ### Run Container
 1. Do Installation Preparation => Preparation steps on your current macOS installation on
 [This Repo](https://github.com/kholia/OSX-KVM/blob/master/HighSierra/README.md#preparation-steps-on-your-current-macos-installation)
@@ -39,6 +24,24 @@ docker run -d --name macOS --device /dev/kvm:/dev/kvm -p 5900:5900 \
 1. Connect to VNC(port: 5900)
 1. Do Installation => Installer Steps on
 [This Repo](https://github.com/kholia/OSX-KVM/blob/master/HighSierra/README.md#installer-steps)
+
+
+## Container Environment
+
+|ENV NAME|default|description|
+|:--|--:|:--|
+|CORE|2|number of cores to use|
+|MEMORY|3G|amount of memory (M = Megabyte, g = Gigabyte)|
+|KEYBOARD|en-us|Keyboard layout|
+|CLOVER|1|Add Clover iso (0: false, *: true)|
+|INSTALLER|1|Add Installer iso (0: false, *: true)|
+
+### Keyboard layouts
+||||||||||||
+|---|---|---|---|---|---|---|---|---|---|---|
+| ar | de-ch | es | fo    | fr-ca | hu | ja | mk    | no | pt-br | sv |
+| da | en-gb | et | fr    | fr-ch | is | lt | nl    | pl | ru    | th |
+| de | en-us | fi | fr-be | hr    | it | lv | nl-be | pt | sl    | tr |
 
 ## Memo
 ### BootScript Changes

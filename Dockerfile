@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.8
 
 MAINTAINER syuchan1005 <syuchan.dev@gmail.com>
 
@@ -10,6 +10,7 @@ ENV QEMU_AUDIO_DRV=none \
     INSTALLER=1
 
 EXPOSE 5900
+EXPOSE 22
 VOLUME /data
 
 COPY start.sh /OSX/

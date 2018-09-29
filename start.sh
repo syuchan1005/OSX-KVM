@@ -35,7 +35,8 @@ qemu-system-x86_64 -enable-kvm \
           -device ich9-intel-hda -device hda-duplex \
           -device ide-drive,bus=ide.1,drive=MacHDD \
           -drive id=MacHDD,if=none,file=/data/mac_hdd.img,format=qcow2 \
-          -netdev user,id=net0 -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
+          -netdev user,id=net0,hostfwd=::22-:22 \
+          -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
           -vnc 0.0.0.0:0 -k $KEYBOARD \
           -smp $(($CORE * 2)),cores=$CORE \
           -m $MEMORY \
